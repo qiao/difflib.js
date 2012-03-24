@@ -1,4 +1,4 @@
-{SequenceMatcher, Differ} = require '..'
+{Differ} = require '..'
 
 suite 'Differ'
 
