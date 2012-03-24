@@ -1,0 +1,23 @@
+{
+    "name"            : "difflib"
+  , "version"         : "0.1.0"
+  , "description"     : ""
+  , "homepage"        : "https://github.com/qiao/difflib.js"
+  , "keywords"        : ["diff"]
+  , "author"          : "Xueqiao Xu <xueqiaoxu@gmail.com>"
+  , "main"            : "./index.js"
+  , "dependencies"    : {}
+  , "devDependencies" : {
+      "coffee-script"   : ">= 1.2.0"
+    , "mocha"           : ">= 0.14.0"
+    , "should"          : ">= 0.6.0"
+  }
+  , "repository"      : {
+      "type"          : "git"
+    , "url"           : "git://github.com/qiao/difflib.js.git"
+  }
+  , "licenses"        : [{
+      "type"          :  "PSF"
+    , "url"           : "http://docs.python.org/license.html"
+  }]
+}
