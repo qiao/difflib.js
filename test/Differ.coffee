@@ -24,8 +24,8 @@ test '#_fancyReplace', ->
   ]
 
 test '#compare', ->
-  s = new Differ
-  s.compare(['one\n', 'two\n', 'three\n'],
+  d = new Differ
+  d.compare(['one\n', 'two\n', 'three\n'],
             ['ore\n', 'tree\n', 'emu\n']).should.eql [
     '- one\n',
     '?  ^\n',
@@ -36,4 +36,30 @@ test '#compare', ->
     '?  -\n',
     '+ tree\n',
     '+ emu\n'
+  ]
+
+  text1 = [
+    '1. Beautiful is better than ugly.\n',
+    '2. Explicit is better than implicit.\n',
+    '3. Simple is better than complex.\n',
+    '4. Complex is better than complicated.\n'
+  ]
+  text2 = [
+    '1. Beautiful is better than ugly.\n',
+    '3.   Simple is better than complex.\n',
+    '4. Complicated is better than complex.\n',
+    '5. Flat is better than nested.\n'
+  ]
+  d = new Differ()
+  d.compare(text1, text2).should.eql [
+    '  1. Beautiful is better than ugly.\n',
+    '- 2. Explicit is better than implicit.\n',
+    '- 3. Simple is better than complex.\n',
+    '+ 3.   Simple is better than complex.\n',
+    '?   ++\n',
+    '- 4. Complex is better than complicated.\n',
+    '?          ^                     ---- ^\n',
+    '+ 4. Complicated is better than complex.\n',
+    '?         ++++ ^                      ^\n',
+    '+ 5. Flat is better than nested.\n'
   ]
