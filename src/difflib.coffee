@@ -549,7 +549,7 @@ class SequenceMatcher
     ### 
     Isolate change clusters by eliminating ranges with no changes.
 
-    Return a generator of groups with upto n lines of context.
+    Return a list groups with upto n lines of context.
     Each group is in the same format as returned by get_opcodes().
 
     >>> a = [1...40].map(String)
@@ -1080,7 +1080,7 @@ _formatRangeUnified = (start, stop) ->
   beginning-- unless length # empty ranges begin at line just before the range
   "#{beginning},#{length}"
 
-unifiedDiff = (a, b, {fromfile, tofile, fromfiledate, tofiledate, n, lineterm}) ->
+unifiedDiff = (a, b, {fromfile, tofile, fromfiledate, tofiledate, n, lineterm}={}) ->
   ###
   Compare two sequences of lines; generate the delta as a unified diff.
 
@@ -1165,7 +1165,7 @@ _formatRangeContext = (start, stop) ->
   "#{beginning},#{beginning + length - 1}"
 
 # See http://www.unix.org/single_unix_specification/
-contextDiff = (a, b, {fromfile, tofile, fromfiledate, tofiledate, n, lineterm}) ->
+contextDiff = (a, b, {fromfile, tofile, fromfiledate, tofiledate, n, lineterm}={}) ->
   ###
   Compare two sequences of lines; generate the delta as a context diff.
 
