@@ -1,12 +1,14 @@
 {
     "name"            : "difflib"
-  , "version"         : "0.1.0"
+  , "version"         : "0.1.1"
   , "description"     : ""
   , "homepage"        : "https://github.com/qiao/difflib.js"
   , "keywords"        : ["diff"]
   , "author"          : "Xueqiao Xu <xueqiaoxu@gmail.com>"
   , "main"            : "./index.js"
-  , "dependencies"    : {}
+  , "dependencies"    : {
+      "heap"            : ">= 0.1.2"
+  }
   , "devDependencies" : {
       "coffee-script"   : ">= 1.2.0"
     , "mocha"           : ">= 0.14.0"
