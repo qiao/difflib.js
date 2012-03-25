@@ -471,6 +471,53 @@ _formatRangeContext = (start, stop) ->
   return "#{beginning}" if length <= 1
   "#{beginning},#{beginning + length - 1}"
 
+contextDiff = (a, b, {fromfile, tofile, fromfiledate, tofiledate, n, lineterm}) ->
+  fromfile     ?= ''
+  tofile       ?= ''
+  fromfiledate ?= ''
+  tofiledate   ?= ''
+  n            ?= 3
+  lineterm     ?= '\n'
+
+  prefix =
+    insert  : '+ '
+    delete  : '- '
+    replace : '! '
+    equal   : '  '
+  started = false
+  lines = []
+  for group in (new SequenceMatcher(null, a, b)).getGroupedOpcodes()
+    unless started
+      started = true
+      fromdate = if fromfiledate then "\t#{fromfiledate}" else ''
+      todate = if tofiledate then "\t#{tofiledate}" else ''
+      lines.push("*** #{fromfile}#{fromdate}#{lineterm}")
+      lines.push("--- #{tofile}#{todate}#{lineterm}")
+
+      [first, last] = [group[0], group[group.length-1]]
+      lines.push('***************' + lineterm)
+
+      file1Range = _formatRangeContext(first[1], last[2])
+      lines.push("*** #{file1Range} ****#{lineterm}")
+
+      if ((tag in ['replace', 'delete']) for [tag, _, _, _, _] in group).some((x) -> x)
+        for [tag, i1, i2, _, _] in group
+          if tag isnt 'insert'
+            for line in a[i1...i2]
+              lines.push(prefix[tag] + line)
+
+      file2Range = _formatRangeContext(first[3], last[4])
+      lines.push("--- #{file2Range} ----#{lineterm}")
+
+      if ((tag in ['replace', 'insert']) for [tag, _, _, _, _] in group).some((x) -> x)
+        for [tag, _, _, j1, j2] in group
+          if tag isnt 'delete'
+            for line in b[j1...j2]
+              lines.push(prefix[tag] + line)
+
+  lines
+
+
 exports = module?.exports or (window.difflib = {})
 exports.SequenceMatcher     = SequenceMatcher
 exports.getCloseMatches     = getCloseMatches
@@ -481,3 +528,4 @@ exports.IS_CHARACTER_JUNK   = IS_CHARACTER_JUNK
 exports._formatRangeUnified = _formatRangeUnified
 exports.unifiedDiff         = unifiedDiff
 exports._formatRangeContext = _formatRangeContext
+exports.contextDiff         = contextDiff

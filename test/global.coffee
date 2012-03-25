@@ -5,7 +5,8 @@
   IS_CHARACTER_JUNK,
   _formatRangeUnified,
   unifiedDiff,
-  _formatRangeContext
+  _formatRangeContext,
+  contextDiff
 } = require '..'
 
 suite 'global'
@@ -61,3 +62,22 @@ test '._formatRangeContext', ->
   _formatRangeContext(1, 2).should.eql '2'
   _formatRangeContext(1, 3).should.eql '2,3'
   _formatRangeContext(1, 4).should.eql '2,4'
+
+test '.contextDiff', ->
+  a = ['one\n', 'two\n', 'three\n', 'four\n']
+  b = ['zero\n', 'one\n', 'tree\n', 'four\n']
+  contextDiff(a, b, {fromfile: 'Original', tofile: 'Current'}).should.eql [
+    '*** Original\n',
+    '--- Current\n',
+    '***************\n',
+    '*** 1,4 ****\n',
+    '  one\n',
+    '! two\n',
+    '! three\n',
+    '  four\n',
+    '--- 1,4 ----\n',
+    '+ zero\n',
+    '  one\n',
+    '! tree\n',
+    '  four\n'
+  ]
