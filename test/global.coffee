@@ -6,7 +6,8 @@
   _formatRangeUnified,
   unifiedDiff,
   _formatRangeContext,
-  contextDiff
+  contextDiff,
+  ndiff
 } = require '..'
 
 suite 'global'
@@ -80,4 +81,19 @@ test '.contextDiff', ->
     '  one\n',
     '! tree\n',
     '  four\n'
+  ]
+
+test 'ndiff', ->
+  a = ['one\n', 'two\n', 'three\n']
+  b = ['ore\n', 'tree\n', 'emu\n']
+  ndiff(a, b).should.eql [
+    '- one\n',
+    '?  ^\n',
+    '+ ore\n',
+    '?  ^\n',
+    '- two\n',
+    '- three\n',
+    '?  -\n',
+    '+ tree\n',
+    '+ emu\n'
   ]

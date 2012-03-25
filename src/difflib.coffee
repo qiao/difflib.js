@@ -517,6 +517,8 @@ contextDiff = (a, b, {fromfile, tofile, fromfiledate, tofiledate, n, lineterm}) 
 
   lines
 
+ndiff = (a, b, linejunk, charjunk=IS_CHARACTER_JUNK) ->
+  (new Differ(linejunk, charjunk)).compare(a, b)
 
 exports = module?.exports or (window.difflib = {})
 exports.SequenceMatcher     = SequenceMatcher
@@ -529,3 +531,4 @@ exports._formatRangeUnified = _formatRangeUnified
 exports.unifiedDiff         = unifiedDiff
 exports._formatRangeContext = _formatRangeContext
 exports.contextDiff         = contextDiff
+exports.ndiff               = ndiff
