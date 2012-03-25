@@ -7,7 +7,8 @@
   unifiedDiff,
   _formatRangeContext,
   contextDiff,
-  ndiff
+  ndiff,
+  restore
 } = require '..'
 
 suite 'global'
@@ -97,3 +98,21 @@ test 'ndiff', ->
     '+ tree\n',
     '+ emu\n'
   ]
+
+test 'restore', ->
+  a = ['one\n', 'two\n', 'three\n']
+  b = ['ore\n', 'tree\n', 'emu\n']
+  diff = ndiff(a, b)
+  restore(diff, 1).should.eql [
+    'one\n',
+    'two\n',
+    'three\n'
+  ]
+  restore(diff, 2).should.eql [
+    'ore\n',
+    'tree\n',
+    'emu\n'
+  ]
+  (->
+    restore(diff, 3)
+  ).should.throw()

@@ -520,6 +520,16 @@ contextDiff = (a, b, {fromfile, tofile, fromfiledate, tofiledate, n, lineterm}) 
 ndiff = (a, b, linejunk, charjunk=IS_CHARACTER_JUNK) ->
   (new Differ(linejunk, charjunk)).compare(a, b)
 
+restore = (delta, which) ->
+  tag = {1: '- ', 2: '+ '}[which]
+  throw new Error("unknow delta choice (must be 1 or 2): #{which}") unless tag
+  prefixes = ['  ', tag]
+  lines = []
+  for line in delta
+    if line[0...2] in prefixes
+      lines.push(line[2..])
+  lines
+
 exports = module?.exports or (window.difflib = {})
 exports.SequenceMatcher     = SequenceMatcher
 exports.getCloseMatches     = getCloseMatches
@@ -532,3 +542,4 @@ exports.unifiedDiff         = unifiedDiff
 exports._formatRangeContext = _formatRangeContext
 exports.contextDiff         = contextDiff
 exports.ndiff               = ndiff
+exports.restore             = restore
