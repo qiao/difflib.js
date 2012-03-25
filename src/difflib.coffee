@@ -416,10 +416,68 @@ class Differ
       lines.push("? #{Array(common+1).join('\t')}#{btags}\n")
     lines
 
+IS_LINE_JUNK = (line, pat=/^\s*#?\s*$/) ->
+  pat.test(line)
 
+IS_CHARACTER_JUNK = (ch, ws=' \t') ->
+  ch in ws
+
+
+_formatRangeUnified = (start, stop) ->
+  beginning = start + 1
+  length = stop - start
+  return "#{beginning}" if length is 1
+  beginning-- unless length
+  "#{beginning},#{length}"
+
+unifiedDiff = (a, b, {fromfile, tofile, fromfiledate, tofiledate, n, lineterm}) ->
+  fromfile     ?= ''
+  tofile       ?= ''
+  fromfiledate ?= ''
+  tofiledate   ?= ''
+  n            ?= 3
+  lineterm     ?= '\n'
+
+  lines = []
+  started = false
+  for group in (new SequenceMatcher(null, a, b)).getGroupedOpcodes()
+    unless started
+      started = true
+      fromdate = if fromfiledate then "\t#{fromfiledate}" else ''
+      todate = if tofiledate then "\t#{tofiledate}" else ''
+      lines.push("--- #{fromfile}#{fromdate}#{lineterm}")
+      lines.push("+++ #{tofile}#{todate}#{lineterm}")
+
+    [first, last] = [group[0], group[group.length-1]]
+    file1Range = _formatRangeUnified(first[1], last[2])
+    file2Range = _formatRangeUnified(first[3], last[4])
+    lines.push("@@ -#{file1Range} +#{file2Range} @@#{lineterm}")
+
+    for [tag, i1, i2, j1, j2] in group
+      if tag is 'equal'
+        lines.push(' ' + line) for line in a[i1...i2]
+        continue
+      if tag in ['replace', 'delete']
+        lines.push('-' + line) for line in a[i1...i2]
+      if tag in ['replace', 'insert']
+        lines.push('+' + line) for line in b[j1...j2]
+
+  lines
+
+_formatRangeContext = (start, stop) ->
+  beginning = start + 1
+  length = stop - start
+  beginning-- unless length
+  return "#{beginning}" if length <= 1
+  "#{beginning},#{beginning + length - 1}"
 
 exports = module?.exports or (window.difflib = {})
-exports.SequenceMatcher = SequenceMatcher
-exports.getCloseMatches = getCloseMatches
-exports._countLeading   = _countLeading
-exports.Differ          = Differ
+exports.SequenceMatcher     = SequenceMatcher
+exports.getCloseMatches     = getCloseMatches
+exports._countLeading       = _countLeading
+exports.Differ              = Differ
+exports.IS_LINE_JUNK        = IS_LINE_JUNK
+exports.IS_CHARACTER_JUNK   = IS_CHARACTER_JUNK
+exports._formatRangeUnified = _formatRangeUnified
+exports.unifiedDiff         = unifiedDiff
+exports._formatRangeContext = _formatRangeContext
