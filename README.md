@@ -285,9 +285,9 @@ The tag values are strings, with these meanings:
 ```
 
 <a name="getGroupedOpcodes" />
-#### getGroupedOpcodes()
+#### getGroupedOpcodes([n])
 
-Return a list groups with upto n lines of context.
+Return a list groups with upto n (default is 3) lines of context.
 Each group is in the same format as returned by [getOpcodes()](#getOpcodes).
 
 <a name="ratio" />
