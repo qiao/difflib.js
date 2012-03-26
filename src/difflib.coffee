@@ -1314,7 +1314,6 @@ restore = (delta, which) ->
   lines
 
 # exports to global
-exports = module?.exports or (window.difflib = {})
 exports.SequenceMatcher     = SequenceMatcher
 exports.getCloseMatches     = getCloseMatches
 exports._countLeading       = _countLeading
