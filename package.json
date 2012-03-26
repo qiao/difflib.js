@@ -1,7 +1,7 @@
 {
     "name"            : "difflib"
-  , "version"         : "0.1.1"
-  , "description"     : ""
+  , "version"         : "0.1.2"
+  , "description"     : "text diff library ported from Python's difflib module"
   , "homepage"        : "https://github.com/qiao/difflib.js"
   , "keywords"        : ["diff"]
   , "author"          : "Xueqiao Xu <xueqiaoxu@gmail.com>"
