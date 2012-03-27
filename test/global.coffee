@@ -1,4 +1,5 @@
 {
+  _arrayCmp,
   getCloseMatches,
   _countLeading,
   IS_LINE_JUNK,
@@ -12,6 +13,16 @@
 } = require '..'
 
 suite 'global'
+
+test '._arrayCmp', ->
+  _arrayCmp([1, 2], [1, 2]).should.eql 0
+  _arrayCmp([1, 2, 3], [1, 2, 4]).should.below 0
+  _arrayCmp([1], [1, 2]).should.below 0
+  _arrayCmp([2, 1], [1, 2]).should.above 0
+  _arrayCmp([2, 0, 0], [2, 3]).should.below 0
+  _arrayCmp([], [1]).should.below 0
+  _arrayCmp([1], []).should.above 0
+  _arrayCmp([], []).should.eql 0
 
 test '.getCloseMatches', ->
  getCloseMatches('appel', ['ape', 'apple', 'peach', 'puppy'])

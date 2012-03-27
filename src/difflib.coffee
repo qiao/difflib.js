@@ -33,10 +33,11 @@ _calculateRatio = (matches, length) ->
   if length then (2.0 * matches / length) else 1.0
 
 _arrayCmp = (a, b) ->
-  for i in [0...max(a.length, b.length)]
+  [la, lb] = [a.length, b.length]
+  for i in [0...min(la, lb)]
     return -1 if a[i] < b[i]
     return 1 if a[i] > b[i]
-  0
+  la - lb
 
 class SequenceMatcher
   ###
@@ -711,7 +712,7 @@ getCloseMatches = (word, possibilities, n=3, cutoff=0.6) ->
       result.push([s.ratio(), x])
 
   # Move the best scorers to head of list
-  result = Heap.nlargest(n, result)
+  result = Heap.nlargest(n, result, _arrayCmp)
   # Strip scores for the best n matches
   (x for [score, x] in result)
 
@@ -1314,6 +1315,7 @@ restore = (delta, which) ->
   lines
 
 # exports to global
+exports._arrayCmp           = _arrayCmp
 exports.SequenceMatcher     = SequenceMatcher
 exports.getCloseMatches     = getCloseMatches
 exports._countLeading       = _countLeading
