@@ -6,7 +6,17 @@ A JavaScript module which provides classes and functions for comparing sequences
 Installation
 ------------
 
-Releases are available for download from [GitHub](https://github.com/qiao/difflib.js). Alternatively, you can install using Node Package Manager (npm):
+#### Browser
+
+To use it in the browser, you may download the [minified js file](https://github.com/qiao/difflib.js/raw/master/dist/difflib-browser.js) and include it in your webpage.
+
+```html
+<script type="text/javascript" src="./difflib-browser.js"></script>
+```
+
+#### Node.js
+
+For Node.js, you can install it using Node Package Manager (npm):
 
 ```bash
 npm install difflib
