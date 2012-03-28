@@ -305,7 +305,7 @@ class SequenceMatcher
     @b2j = b2j = {}
 
     for elt, i in b
-      indices = if elt of b2j then b2j[elt] else b2j[elt] = []
+      indices = if b2j.hasOwnProperty(elt) then b2j[elt] else b2j[elt] = []
       indices.push(i)
 
     # Purge junk elements
@@ -331,8 +331,8 @@ class SequenceMatcher
     # Sicne the number of *unique* junk elements is probably small, the
     # memory burden of keeping this set alive is likely trivial compared to
     # the size of b2j.
-    @isbjunk = (b) -> b of junk
-    @isbpopular = (b) -> b of popular
+    @isbjunk = (b) -> junk.hasOwnProperty(b)
+    @isbpopular = (b) -> popular.hasOwnProperty(b)
 
   findLongestMatch: (alo, ahi, blo, bhi) ->
     ### 
@@ -649,7 +649,7 @@ class SequenceMatcher
     avail = {}
     matches = 0
     for elt in @a
-      if elt of avail
+      if avail.hasOwnProperty(elt)
         numb = avail[elt]
       else
         numb = fullbcount[elt] or 0
