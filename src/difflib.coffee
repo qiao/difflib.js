@@ -622,9 +622,9 @@ class SequenceMatcher
     >>> s.realQuickRatio()
     1.0
     ###
-    matches = @getMatchingBlocks().reduce ((sum, match) ->
-      sum += match[2]
-    ), 0
+    matches = 0
+    for match in @getMatchingBlocks()
+      matches += match[2]
     _calculateRatio(matches, @a.length + @b.length)
 
   quickRatio: ->
@@ -1008,8 +1008,8 @@ class Differ
                  _countLeading(bline, '\t'))
     common = min(common, _countLeading(atags[0...common], ' '))
     common = min(common, _countLeading(btags[0...common], ' '))
-    atags = atags[common..].trimRight()
-    btags = btags[common..].trimRight()
+    atags = atags[common..].replace(/\s+$/, '')
+    btags = btags[common..].replace(/\s+$/, '')
 
     lines.push('- ' + aline)
     if atags.length
