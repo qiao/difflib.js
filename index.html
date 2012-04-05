@@ -1,0 +1,716 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Difflib.js by qiao</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/qiao/difflib.js">Fork On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/qiao/difflib.js/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/qiao/difflib.js/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Difflib.js</h1>
+          <p>Text diff library in JavaScript, ported from Python's difflib module.</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/qiao">qiao</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h1>Difflib.js</h1>
+
+<p>A JavaScript module which provides classes and functions for comparing sequences. It can be used for example, for comparing files, and can produce difference information in various formats, including context and unified diffs. Ported from Python's <a href="http://docs.python.org/library/difflib.html">difflib</a> module.</p>
+
+<h2>Installation</h2>
+
+<h4>Browser</h4>
+
+<p>To use it in the browser, you may download the <a href="https://github.com/qiao/difflib.js/raw/master/dist/difflib-browser.js">minified js file</a> and include it in your webpage.</p>
+
+<div class="highlight">
+<pre><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"./difflib-browser.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+</pre>
+</div>
+
+
+<h4>Node.js</h4>
+
+<p>For Node.js, you can install it using Node Package Manager (npm):</p>
+
+<div class="highlight">
+<pre>npm install difflib
+</pre>
+</div>
+
+
+<p>Then, in your script:</p>
+
+<div class="highlight">
+<pre><span class="kd">var</span> <span class="nx">difflib</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'difflib'</span><span class="p">);</span>
+</pre>
+</div>
+
+
+<h2>Quick Examples</h2>
+
+<ol>
+<li>
+<p>contextDiff</p>
+
+<div class="highlight">
+<pre><span class="o">&gt;&gt;&gt;</span> <span class="nx">s1</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'bacon\n'</span><span class="p">,</span> <span class="s1">'eggs\n'</span><span class="p">,</span> <span class="s1">'ham\n'</span><span class="p">,</span> <span class="s1">'guido\n'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nx">s2</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'python\n'</span><span class="p">,</span> <span class="s1">'eggy\n'</span><span class="p">,</span> <span class="s1">'hamster\n'</span><span class="p">,</span> <span class="s1">'guido\n'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nx">difflib</span><span class="p">.</span><span class="nx">contextDiff</span><span class="p">(</span><span class="nx">s1</span><span class="p">,</span> <span class="nx">s2</span><span class="p">,</span> <span class="p">{</span><span class="nx">fromfile</span><span class="o">:</span><span class="s1">'before.py'</span><span class="p">,</span> <span class="nx">tofile</span><span class="o">:</span><span class="s1">'after.py'</span><span class="p">})</span>
+<span class="p">[</span> <span class="s1">'*** before.py\n'</span><span class="p">,</span>
+  <span class="s1">'--- after.py\n'</span><span class="p">,</span>
+  <span class="s1">'***************\n'</span><span class="p">,</span>
+  <span class="s1">'*** 1,4 ****\n'</span><span class="p">,</span>
+  <span class="s1">'! bacon\n'</span><span class="p">,</span>
+  <span class="s1">'! eggs\n'</span><span class="p">,</span>
+  <span class="s1">'! ham\n'</span><span class="p">,</span>
+  <span class="s1">'  guido\n'</span><span class="p">,</span>
+  <span class="s1">'--- 1,4 ----\n'</span><span class="p">,</span>
+  <span class="s1">'! python\n'</span><span class="p">,</span>
+  <span class="s1">'! eggy\n'</span><span class="p">,</span>
+  <span class="s1">'! hamster\n'</span><span class="p">,</span>
+  <span class="s1">'  guido\n'</span> <span class="p">]</span>
+</pre>
+</div>
+</li>
+<li>
+<p>unifiedDiff</p>
+
+<div class="highlight">
+<pre><span class="o">&gt;&gt;&gt;</span> <span class="nx">difflib</span><span class="p">.</span><span class="nx">unifiedDiff</span><span class="p">(</span><span class="s1">'one two three four'</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">),</span>
+<span class="p">...</span>                     <span class="s1">'zero one tree four'</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">),</span> <span class="p">{</span>
+<span class="p">...</span>                       <span class="nx">fromfile</span><span class="o">:</span> <span class="s1">'Original'</span>
+<span class="p">...</span>                       <span class="nx">tofile</span><span class="o">:</span> <span class="s1">'Current'</span><span class="p">,</span>
+<span class="p">...</span>                       <span class="nx">fromfiledate</span><span class="o">:</span> <span class="s1">'2005-01-26 23:30:50'</span><span class="p">,</span>
+<span class="p">...</span>                       <span class="nx">tofiledate</span><span class="o">:</span> <span class="s1">'2010-04-02 10:20:52'</span><span class="p">,</span>
+<span class="p">...</span>                       <span class="nx">lineterm</span><span class="o">:</span> <span class="s1">''</span>
+<span class="p">...</span>                     <span class="p">})</span>
+<span class="p">[</span> <span class="s1">'--- Original\t2005-01-26 23:30:50'</span><span class="p">,</span>
+  <span class="s1">'+++ Current\t2010-04-02 10:20:52'</span><span class="p">,</span>
+  <span class="s1">'@@ -1,4 +1,4 @@'</span><span class="p">,</span>
+  <span class="s1">'+zero'</span><span class="p">,</span>
+  <span class="s1">' one'</span><span class="p">,</span>
+  <span class="s1">'-two'</span><span class="p">,</span>
+  <span class="s1">'-three'</span><span class="p">,</span>
+  <span class="s1">'+tree'</span><span class="p">,</span>
+  <span class="s1">' four'</span> <span class="p">]</span>
+</pre>
+</div>
+</li>
+<li>
+<p>ndiff</p>
+
+<div class="highlight">
+<pre><span class="o">&gt;&gt;&gt;</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'one\n'</span><span class="p">,</span> <span class="s1">'two\n'</span><span class="p">,</span> <span class="s1">'three\n'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nx">b</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'ore\n'</span><span class="p">,</span> <span class="s1">'tree\n'</span><span class="p">,</span> <span class="s1">'emu\n'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nx">difflib</span><span class="p">.</span><span class="nx">ndiff</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span>
+<span class="p">[</span> <span class="s1">'- one\n'</span><span class="p">,</span>
+  <span class="s1">'?  ^\n'</span><span class="p">,</span>
+  <span class="s1">'+ ore\n'</span><span class="p">,</span>
+  <span class="s1">'?  ^\n'</span><span class="p">,</span>
+  <span class="s1">'- two\n'</span><span class="p">,</span>
+  <span class="s1">'- three\n'</span><span class="p">,</span>
+  <span class="s1">'?  -\n'</span><span class="p">,</span>
+  <span class="s1">'+ tree\n'</span><span class="p">,</span>
+  <span class="s1">'+ emu\n'</span> <span class="p">]</span>
+</pre>
+</div>
+</li>
+<li>
+<p>ratio</p>
+
+<div class="highlight">
+<pre><span class="o">&gt;&gt;&gt;</span> <span class="nx">s</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">difflib</span><span class="p">.</span><span class="nx">SequenceMatcher</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="s1">'abcd'</span><span class="p">,</span> <span class="s1">'bcde'</span><span class="p">);</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nx">s</span><span class="p">.</span><span class="nx">ratio</span><span class="p">();</span>
+<span class="mf">0.75</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nx">s</span><span class="p">.</span><span class="nx">quickRatio</span><span class="p">();</span>
+<span class="mf">0.75</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nx">s</span><span class="p">.</span><span class="nx">realQuickRatio</span><span class="p">();</span>
+<span class="mf">1.0</span>
+</pre>
+</div>
+</li>
+<li>
+<p>getOpcodes</p>
+
+<div class="highlight">
+<pre><span class="o">&gt;&gt;&gt;</span> <span class="nx">s</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">difflib</span><span class="p">.</span><span class="nx">SequenceMatcher</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="s1">'qabxcd'</span><span class="p">,</span> <span class="s1">'abycdf'</span><span class="p">);</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nx">s</span><span class="p">.</span><span class="nx">getOpcodes</span><span class="p">();</span>
+<span class="p">[</span> <span class="p">[</span> <span class="s1">'delete'</span>  <span class="p">,</span> <span class="mi">0</span> <span class="p">,</span> <span class="mi">1</span> <span class="p">,</span> <span class="mi">0</span> <span class="p">,</span> <span class="mi">0</span> <span class="p">]</span> <span class="p">,</span>
+  <span class="p">[</span> <span class="s1">'equal'</span>   <span class="p">,</span> <span class="mi">1</span> <span class="p">,</span> <span class="mi">3</span> <span class="p">,</span> <span class="mi">0</span> <span class="p">,</span> <span class="mi">2</span> <span class="p">]</span> <span class="p">,</span>
+  <span class="p">[</span> <span class="s1">'replace'</span> <span class="p">,</span> <span class="mi">3</span> <span class="p">,</span> <span class="mi">4</span> <span class="p">,</span> <span class="mi">2</span> <span class="p">,</span> <span class="mi">3</span> <span class="p">]</span> <span class="p">,</span>
+  <span class="p">[</span> <span class="s1">'equal'</span>   <span class="p">,</span> <span class="mi">4</span> <span class="p">,</span> <span class="mi">6</span> <span class="p">,</span> <span class="mi">3</span> <span class="p">,</span> <span class="mi">5</span> <span class="p">]</span> <span class="p">,</span>
+  <span class="p">[</span> <span class="s1">'insert'</span>  <span class="p">,</span> <span class="mi">6</span> <span class="p">,</span> <span class="mi">6</span> <span class="p">,</span> <span class="mi">5</span> <span class="p">,</span> <span class="mi">6</span> <span class="p">]</span> <span class="p">]</span>
+</pre>
+</div>
+</li>
+<li>
+<p>getCloseMatches</p>
+
+<div class="highlight">
+<pre><span class="o">&gt;&gt;&gt;</span> <span class="nx">difflib</span><span class="p">.</span><span class="nx">getCloseMatches</span><span class="p">(</span><span class="s1">'appel'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'ape'</span><span class="p">,</span> <span class="s1">'apple'</span><span class="p">,</span> <span class="s1">'peach'</span><span class="p">,</span> <span class="s1">'puppy'</span><span class="p">])</span>
+<span class="p">[</span><span class="s1">'apple'</span><span class="p">,</span> <span class="s1">'ape'</span><span class="p">]</span>
+</pre>
+</div>
+</li>
+</ol><h2>Documentation</h2>
+
+<ul>
+<li>
+<p><a href="#SequenceMatcher">SequenceMatcher</a></p>
+
+<ul>
+<li><a href="#setSeqs">setSeqs</a></li>
+<li><a href="#setSeq1">setSeq1</a></li>
+<li><a href="#setSeq2">setSeq2</a></li>
+<li><a href="#findLongestMatch">findLongestMatch</a></li>
+<li><a href="#getMatchingBlocks">getMatchingBlocks</a></li>
+<li><a href="#getOpcodes">getOpcodes</a></li>
+<li><a href="#getGroupedOpcodes">getGroupedOpcodes</a></li>
+<li><a href="#ratio">ratio</a></li>
+<li><a href="#quickRatio">quickRatio</a></li>
+<li><a href="#realQuickRatio">realQuickRatio</a></li>
+</ul>
+</li>
+<li>
+<p><a href="#Differ">Differ</a></p>
+
+<ul>
+<li><a href="#compare">compare</a></li>
+</ul>
+</li>
+<li><p><a href="#contextDiff">contextDiff</a></p></li>
+<li><p><a href="#getCloseMatches">getCloseMatches</a></p></li>
+<li><p><a href="#ndiff">ndiff</a></p></li>
+<li><p><a href="#restore">restore</a></p></li>
+<li><p><a href="#unifiedDiff">unifiedDiff</a></p></li>
+<li><p><a href="#IS_LINE_JUNK">IS_LINE_JUNK</a></p></li>
+<li><p><a href="#IS_CHARACTER_JUNK">IS_CHARACTER_JUNK</a></p></li>
+</ul><p><a name="SequenceMatcher"></a></p>
+
+<h3>
+<em>class</em> difflib.<strong>SequenceMatcher</strong>([isjunk[, a[, b[, autojunk=true]]]])</h3>
+
+<p>This is a flexible class for comparing pairs of sequences of any type.</p>
+
+<p>Optional argument <em>isjunk</em> must be <strong>null</strong> (the default) or a one-argument function
+that takes a sequence element and returns true if and only if the element is
+"junk" and should be ignored. </p>
+
+<p>Passing <strong>null</strong> for <em>isjunk</em> is equivalent to passing</p>
+
+<div class="highlight">
+<pre><span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="kc">false</span><span class="p">;</span> <span class="p">};</span> 
+</pre>
+</div>
+
+
+<p>in other words, no elements are ignored. </p>
+
+<p>For example, pass:</p>
+
+<div class="highlight">
+<pre><span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">x</span> <span class="o">==</span> <span class="s1">' '</span> <span class="o">||</span> <span class="nx">x</span> <span class="o">==</span> <span class="s1">'\t'</span><span class="p">;</span> <span class="p">}</span>
+</pre>
+</div>
+
+
+<p>if you're comparing lines as sequences of characters, 
+and don’t want to synch up on blanks or hard tabs.</p>
+
+<p>The optional arguments <em>a</em> and <em>b</em> are sequences to be compared;
+both default to empty strings.</p>
+
+<p>The optional argument <em>autojunk</em> can be used to disable the 
+automatic junk heuristic, which automatically treats certain sequence items as junk.</p>
+
+<p><a name="setSeqs"></a></p>
+
+<h4>setSeqs(a, b)</h4>
+
+<p>Set the two sequences to be compared.</p>
+
+<p>SequenceMatcher computes and caches detailed information about the second
+sequence, so if you want to compare one sequence against many sequences,
+use <a href="#setSeq2">setSeq2()</a> to set the commonly used sequence once and call 
+<a href="#setSeq1">setSeq1()</a> repeatedly, once for each of the other sequences.</p>
+
+<p><a name="setSeq1"></a></p>
+
+<h4>setSeq1(a)</h4>
+
+<p>Set the first sequence to be compared. The second sequence to be compared is not changed.</p>
+
+<p><a name="setSeq2"></a></p>
+
+<h4>setSeq2(a)</h4>
+
+<p>Set the second sequence to be compared. The first sequence to be compared is not changed.</p>
+
+<p><a name="findLongestMatch"></a></p>
+
+<h4>findLongestMatch(alo, ahi, blo, bhi)</h4>
+
+<p>Find longest matching block in <code>a[alo:ahi]</code> and <code>b[blo:bhi]</code>.</p>
+
+<p>If <em>isjunk</em> was omitted or null, <em>findLongestMatch()</em> returns <code>[i, j, k]</code> such that 
+<code>a[i:i+k]</code> is equal to <code>b[j:j+k]</code>, where <code>alo &lt;= i &lt;= i+k &lt;= ahi</code> and 
+<code>blo &lt;= j &lt;= j+k &lt;= bhi</code>. 
+For all <code>[i', j', k']</code> meeting those conditions, the additional conditions <code>k &gt;= k'</code>, 
+<code>i &lt;= i'</code>, and if <code>i == i'</code>, <code>j &lt;= j'</code> are also met. 
+In other words, of all maximal matching blocks, return one that starts earliest in <em>a</em>,
+and of all those maximal matching blocks that start earliest in <em>a</em>, 
+return the one that starts earliest in <em>b</em>.</p>
+
+<div class="highlight">
+<pre><span class="o">&gt;&gt;&gt;</span> <span class="nx">s</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">difflib</span><span class="p">.</span><span class="nx">SequenceMatcher</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="s2">" abcd"</span><span class="p">,</span> <span class="s2">"abcd abcd"</span><span class="p">);</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nx">s</span><span class="p">.</span><span class="nx">findLongestMatch</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">);</span>
+<span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+</pre>
+</div>
+
+
+<p>If <em>isjunk</em> was provided, first the longest matching block is determined
+as above, but with the additional restriction that no junk element appears
+in the block. 
+Then that block is extended as far as possible by matching (only) junk 
+elements on both sides. So the resulting block never matches on junk 
+except as identical junk happens to be adjacent to an interesting match.</p>
+
+<p>Here's the same example as before, but considering blanks to be junk. 
+That prevents <code>' abcd'</code> from matching the <code>' abcd'</code> at the tail end of 
+the second sequence directly. 
+Instead only the <code>'abcd'</code> can match, and matches the leftmost <code>'abcd'</code> 
+in the second sequence:</p>
+
+<div class="highlight">
+<pre><span class="o">&gt;&gt;&gt;</span> <span class="nx">s</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">difflib</span><span class="p">.</span><span class="nx">SequenceMatcher</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span><span class="k">return</span> <span class="nx">x</span> <span class="o">==</span> <span class="s1">' '</span><span class="p">;},</span> <span class="s2">" abcd"</span><span class="p">,</span> <span class="s2">"abcd abcd"</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nx">s</span><span class="p">.</span><span class="nx">findLongestMatch</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+</pre>
+</div>
+
+
+<p>If no blocks match, this returns <code>[alo, blo, 0]</code>.</p>
+
+<p><a name="getMatchingBlocks"></a></p>
+
+<h4>getMatchingBlocks()</h4>
+
+<p>Return list of triples describing matching subsequences. 
+Each triple is of the form <code>[i, j, n]</code>, and means that <code>a[i:i+n] == b[j:j+n]</code>. 
+The triples are monotonically increasing in <em>i</em> and <em>j</em>.</p>
+
+<p>The last triple is a dummy, and has the value <code>[a.length, b.length, 0]</code>.
+It is the only triple with <code>n == 0</code>. If <code>[i, j, n]</code> and <code>[i', j', n']</code> 
+are adjacent triples in the list, and the second is not the last triple 
+in the list, then <code>i+n != i'</code> or <code>j+n != j'</code>; 
+in other words, adjacent triples always describe non-adjacent equal blocks.</p>
+
+<div class="highlight">
+<pre><span class="o">&gt;&gt;&gt;</span> <span class="nx">s</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">difflib</span><span class="p">.</span><span class="nx">SequenceMatcher</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="s2">"abxcd"</span><span class="p">,</span> <span class="s2">"abcd"</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nx">s</span><span class="p">.</span><span class="nx">getMatchingBlocks</span><span class="p">()</span>
+<span class="p">[</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="p">]</span>
+</pre>
+</div>
+
+
+<p><a name="getOpcodes"></a></p>
+
+<h4>getOpcodes()</h4>
+
+<p>Return list of 5-tuples describing how to turn a into b. 
+Each tuple is of the form <code>[tag, i1, i2, j1, j2]</code>. 
+The first tuple has <code>i1 == j1 == 0</code>, and remaining tuples 
+have <em>i1</em> equal to the <em>i2</em> from the preceding tuple, 
+and, likewise, <em>j1</em> equal to the previous <em>j2</em>.</p>
+
+<p>The tag values are strings, with these meanings:</p>
+
+<pre><code>Value       Meaning
+
+'replace'   a[i1:i2] should be replaced by b[j1:j2].
+'delete'    a[i1:i2] should be deleted. Note that j1 == j2 in this case.
+'insert'    b[j1:j2] should be inserted at a[i1:i1]. Note that i1 == i2 in this case.
+'equal'     a[i1:i2] == b[j1:j2] (the sub-sequences are equal).
+</code></pre>
+
+<div class="highlight">
+<pre><span class="o">&gt;&gt;&gt;</span> <span class="nx">s</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">difflib</span><span class="p">.</span><span class="nx">SequenceMatcher</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="s1">'qabxcd'</span><span class="p">,</span> <span class="s1">'abycdf'</span><span class="p">);</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nx">s</span><span class="p">.</span><span class="nx">getOpcodes</span><span class="p">();</span>
+<span class="p">[</span> <span class="p">[</span> <span class="s1">'delete'</span>  <span class="p">,</span> <span class="mi">0</span> <span class="p">,</span> <span class="mi">1</span> <span class="p">,</span> <span class="mi">0</span> <span class="p">,</span> <span class="mi">0</span> <span class="p">]</span> <span class="p">,</span>
+  <span class="p">[</span> <span class="s1">'equal'</span>   <span class="p">,</span> <span class="mi">1</span> <span class="p">,</span> <span class="mi">3</span> <span class="p">,</span> <span class="mi">0</span> <span class="p">,</span> <span class="mi">2</span> <span class="p">]</span> <span class="p">,</span>
+  <span class="p">[</span> <span class="s1">'replace'</span> <span class="p">,</span> <span class="mi">3</span> <span class="p">,</span> <span class="mi">4</span> <span class="p">,</span> <span class="mi">2</span> <span class="p">,</span> <span class="mi">3</span> <span class="p">]</span> <span class="p">,</span>
+  <span class="p">[</span> <span class="s1">'equal'</span>   <span class="p">,</span> <span class="mi">4</span> <span class="p">,</span> <span class="mi">6</span> <span class="p">,</span> <span class="mi">3</span> <span class="p">,</span> <span class="mi">5</span> <span class="p">]</span> <span class="p">,</span>
+  <span class="p">[</span> <span class="s1">'insert'</span>  <span class="p">,</span> <span class="mi">6</span> <span class="p">,</span> <span class="mi">6</span> <span class="p">,</span> <span class="mi">5</span> <span class="p">,</span> <span class="mi">6</span> <span class="p">]</span> <span class="p">]</span>
+</pre>
+</div>
+
+
+<p><a name="getGroupedOpcodes"></a></p>
+
+<h4>getGroupedOpcodes([n])</h4>
+
+<p>Return a list groups with upto n (default is 3) lines of context.
+Each group is in the same format as returned by <a href="#getOpcodes">getOpcodes()</a>.</p>
+
+<p><a name="ratio"></a></p>
+
+<h4>ratio()</h4>
+
+<p>Return a measure of the sequences’ similarity as a float in the range [0, 1].</p>
+
+<p>Where T is the total number of elements in both sequences, 
+and M is the number of matches, this is 2.0*M / T. 
+Note that this is <code>1.0</code> if the sequences are identical, 
+and <code>0.0</code> if they have nothing in common.</p>
+
+<p>This is expensive to compute if <a href="#getMatchingBlocks">getMatchingBlocks()</a> or 
+<a href="#getOpcodes">getOpcodes()</a> hasn’t already been called, in which case 
+you may want to try <a href="#quickRatio">quickRatio()</a> or 
+<a href="#realQuickRatio">realQuickRatio()</a> first to get an upper bound.</p>
+
+<p><a name="quickRatio"></a></p>
+
+<h4>quickRatio()</h4>
+
+<p>Return an upper bound on ratio() relatively quickly.</p>
+
+<p><a name="realQuickRatio"></a></p>
+
+<h4>realQuickRatio()</h4>
+
+<p>Return an upper bound on ratio() very quickly.</p>
+
+<div class="highlight">
+<pre><span class="o">&gt;&gt;&gt;</span> <span class="nx">s</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">difflib</span><span class="p">.</span><span class="nx">SequenceMatcher</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="s1">'abcd'</span><span class="p">,</span> <span class="s1">'bcde'</span><span class="p">);</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nx">s</span><span class="p">.</span><span class="nx">ratio</span><span class="p">();</span>
+<span class="mf">0.75</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nx">s</span><span class="p">.</span><span class="nx">quickRatio</span><span class="p">();</span>
+<span class="mf">0.75</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nx">s</span><span class="p">.</span><span class="nx">realQuickRatio</span><span class="p">();</span>
+<span class="mf">1.0</span>
+</pre>
+</div>
+
+
+<p><a name="Differ"></a></p>
+
+<h3>
+<em>class</em> difflib.<strong>Differ</strong>([linejunk[, charjunk]])</h3>
+
+<p>This is a class for comparing sequences of lines of text, 
+and producing human-readable differences or deltas. 
+Differ uses <a href="#SequenceMatcher">SequenceMatcher</a> both to compare 
+sequences of lines, and to compare sequences of characters within 
+similar (near-matching) lines.</p>
+
+<p>Each line of a Differ delta begins with a two-letter code:</p>
+
+<pre><code>Code    Meaning
+'- '    line unique to sequence 1
+'+ '    line unique to sequence 2
+'  '    line common to both sequences
+'? '    line not present in either input sequence
+</code></pre>
+
+<p>Lines beginning with <code>?</code> attempt to guide the eye to intraline differences, 
+and were not present in either input sequence. 
+These lines can be confusing if the sequences contain tab characters.</p>
+
+<p>Optional parameters <em>linejunk</em> and <em>charjunk</em> are for filter functions (or <strong>null</strong>):</p>
+
+<p><em>linejunk</em>: A function that accepts a single string argument, 
+and returns true if the string is junk. 
+The default is <strong>null</strong>, meaning that no line is considered junk.</p>
+
+<p><em>charjunk</em>: A function that accepts a single character argument 
+(a string of length 1), and returns true if the character is junk. 
+The default is <em>null</em>, meaning that no character is considered junk.</p>
+
+<p><a name="compare"></a></p>
+
+<h4>compare(a, b)</h4>
+
+<p>Compare two sequences of lines, and generate the delta (a sequence of lines).</p>
+
+<p>Each sequence must contain individual single-line strings ending with newlines.</p>
+
+<div class="highlight">
+<pre><span class="o">&gt;&gt;&gt;</span> <span class="nx">d</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">difflib</span><span class="p">.</span><span class="nx">Differ</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nx">d</span><span class="p">.</span><span class="nx">compare</span><span class="p">([</span><span class="s1">'one\n'</span><span class="p">,</span> <span class="s1">'two\n'</span><span class="p">,</span> <span class="s1">'three\n'</span><span class="p">],</span>
+<span class="p">...</span>           <span class="p">[</span><span class="s1">'ore\n'</span><span class="p">,</span> <span class="s1">'tree\n'</span><span class="p">,</span> <span class="s1">'emu\n'</span><span class="p">])</span>
+<span class="p">[</span> <span class="s1">'- one\n'</span><span class="p">,</span>
+  <span class="s1">'?  ^\n'</span><span class="p">,</span>
+  <span class="s1">'+ ore\n'</span><span class="p">,</span>
+  <span class="s1">'?  ^\n'</span><span class="p">,</span>
+  <span class="s1">'- two\n'</span><span class="p">,</span>
+  <span class="s1">'- three\n'</span><span class="p">,</span>
+  <span class="s1">'?  -\n'</span><span class="p">,</span>
+  <span class="s1">'+ tree\n'</span><span class="p">,</span>
+  <span class="s1">'+ emu\n'</span> <span class="p">]</span>
+</pre>
+</div>
+
+
+<p><a name="contextDiff"></a></p>
+
+<h3>difflib.<strong>contextDiff</strong>(a, b, options)</h3>
+
+<p>Compare <em>a</em> and <em>b</em> (lists of strings); 
+return the delta lines in context diff format.</p>
+
+<p>options:</p>
+
+<ul>
+<li>fromfile</li>
+<li>tofile</li>
+<li>fromfiledate</li>
+<li>tofiledate</li>
+<li>n</li>
+<li>lineterm</li>
+</ul><p>Context diffs are a compact way of showing just the lines that 
+have changed plus a few lines of context. The changes are shown in a 
+before/after style. 
+The number of context lines is set by n which defaults to three.</p>
+
+<p>By default, the diff control lines (those with <code>***</code> or <code>---</code>) are created 
+with a trailing newline. </p>
+
+<p>For inputs that do not have trailing newlines, set the lineterm argument 
+to <code>""</code> so that the output will be uniformly newline free.</p>
+
+<p>The context diff format normally has a header for filenames and modification
+times. Any or all of these may be specified using strings for <em>fromfile</em>, 
+<em>tofile</em>, <em>fromfiledate</em>, and <em>tofiledate</em>. 
+The modification times are normally expressed in the ISO 8601 format. 
+If not specified, the strings default to blanks.</p>
+
+<div class="highlight">
+<pre><span class="o">&gt;&gt;&gt;</span> <span class="kd">var</span> <span class="nx">s1</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'bacon\n'</span><span class="p">,</span> <span class="s1">'eggs\n'</span><span class="p">,</span> <span class="s1">'ham\n'</span><span class="p">,</span> <span class="s1">'guido\n'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="kd">var</span> <span class="nx">s2</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'python\n'</span><span class="p">,</span> <span class="s1">'eggy\n'</span><span class="p">,</span> <span class="s1">'hamster\n'</span><span class="p">,</span> <span class="s1">'guido\n'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nx">difflib</span><span class="p">.</span><span class="nx">contextDiff</span><span class="p">(</span><span class="nx">s1</span><span class="p">,</span> <span class="nx">s2</span><span class="p">,</span> <span class="p">{</span><span class="nx">fromfile</span><span class="o">:</span><span class="s1">'before.py'</span><span class="p">,</span> <span class="nx">tofile</span><span class="o">:</span><span class="s1">'after.py'</span><span class="p">})</span>
+<span class="p">[</span> <span class="s1">'*** before.py\n'</span><span class="p">,</span>
+  <span class="s1">'--- after.py\n'</span><span class="p">,</span>
+  <span class="s1">'***************\n'</span><span class="p">,</span>
+  <span class="s1">'*** 1,4 ****\n'</span><span class="p">,</span>
+  <span class="s1">'! bacon\n'</span><span class="p">,</span>
+  <span class="s1">'! eggs\n'</span><span class="p">,</span>
+  <span class="s1">'! ham\n'</span><span class="p">,</span>
+  <span class="s1">'  guido\n'</span><span class="p">,</span>
+  <span class="s1">'--- 1,4 ----\n'</span><span class="p">,</span>
+  <span class="s1">'! python\n'</span><span class="p">,</span>
+  <span class="s1">'! eggy\n'</span><span class="p">,</span>
+  <span class="s1">'! hamster\n'</span><span class="p">,</span>
+  <span class="s1">'  guido\n'</span> <span class="p">]</span>
+</pre>
+</div>
+
+
+<p><a name="getCloseMatches"></a></p>
+
+<h3>difflib.<em>getCloseMatches</em>(word, possibilities[, n][, cutoff])</h3>
+
+<p>Return a list of the best “good enough” matches. 
+<em>word</em> is a sequence for which close matches are desired 
+(typically a string), and <em>possibilities</em> is a list of sequences against 
+which to match word (typically a list of strings).</p>
+
+<p>Optional argument <em>n</em> (default 3) is the maximum number of close 
+matches to return; <em>n</em> must be greater than 0.</p>
+
+<p>Optional argument <em>cutoff</em> (default 0.6) is a float in the range 
+[0, 1]. 
+Possibilities that don’t score at least that similar to word are ignored.</p>
+
+<p>The best (no more than n) matches among the possibilities are 
+returned in a list, sorted by similarity score, most similar first.</p>
+
+<div class="highlight">
+<pre><span class="o">&gt;&gt;&gt;</span> <span class="nx">difflib</span><span class="p">.</span><span class="nx">getCloseMatches</span><span class="p">(</span><span class="s1">'appel'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'ape'</span><span class="p">,</span> <span class="s1">'apple'</span><span class="p">,</span> <span class="s1">'peach'</span><span class="p">,</span> <span class="s1">'puppy'</span><span class="p">])</span>
+<span class="p">[</span><span class="s1">'apple'</span><span class="p">,</span> <span class="s1">'ape'</span><span class="p">]</span>
+</pre>
+</div>
+
+
+<p><a name="ndiff"></a></p>
+
+<h3>difflib.<strong>ndiff</strong>(a, b[, linejunk][, charjunk])</h3>
+
+<p>Compare <em>a</em> and b (lists of strings); 
+return Differ-style delta lines</p>
+
+<p>Optional keyword parameters <em>linejunk</em> and <em>charjunk</em> are for 
+filter functions (or <strong>null</strong>):</p>
+
+<p><em>linejunk</em>: A function that accepts a single string argument, 
+and returns true if the string is junk, or false if not. 
+The default is (<em>null</em>).</p>
+
+<p><em>charjunk</em>: A function that accepts a character (a string of length 1),
+and returns if the character is junk, or false if not. The default is 
+module-level function <a href="#IS_CHARACTER_JUNK">IS_CHARACTER_JUNK()</a>, 
+which filters out whitespace characters (a blank or tab; note: 
+bad idea to include newline in this!).</p>
+
+<div class="highlight">
+<pre><span class="o">&gt;&gt;&gt;</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'one\n'</span><span class="p">,</span> <span class="s1">'two\n'</span><span class="p">,</span> <span class="s1">'three\n'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nx">b</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'ore\n'</span><span class="p">,</span> <span class="s1">'tree\n'</span><span class="p">,</span> <span class="s1">'emu\n'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nx">difflib</span><span class="p">.</span><span class="nx">ndiff</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span>
+<span class="p">[</span> <span class="s1">'- one\n'</span><span class="p">,</span>
+  <span class="s1">'?  ^\n'</span><span class="p">,</span>
+  <span class="s1">'+ ore\n'</span><span class="p">,</span>
+  <span class="s1">'?  ^\n'</span><span class="p">,</span>
+  <span class="s1">'- two\n'</span><span class="p">,</span>
+  <span class="s1">'- three\n'</span><span class="p">,</span>
+  <span class="s1">'?  -\n'</span><span class="p">,</span>
+  <span class="s1">'+ tree\n'</span><span class="p">,</span>
+  <span class="s1">'+ emu\n'</span> <span class="p">]</span>
+</pre>
+</div>
+
+
+<p><a name="restore"></a></p>
+
+<h3>difflib.<strong>restore</strong>(sequence, which)</h3>
+
+<p>Return one of the two sequences that generated a delta.</p>
+
+<p>Given a sequence produced by Differ.compare() or ndiff(), 
+extract lines originating from file 1 or 2 (parameter which), stripping off line prefixes.</p>
+
+<div class="highlight">
+<pre><span class="o">&gt;&gt;&gt;</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'one\n'</span><span class="p">,</span> <span class="s1">'two\n'</span><span class="p">,</span> <span class="s1">'three\n'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nx">b</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'ore\n'</span><span class="p">,</span> <span class="s1">'tree\n'</span><span class="p">,</span> <span class="s1">'emu\n'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nx">diff</span> <span class="o">=</span> <span class="nx">difflib</span><span class="p">.</span><span class="nx">ndiff</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nx">difflib</span><span class="p">.</span><span class="nx">restore</span><span class="p">(</span><span class="nx">diff</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="p">[</span> <span class="s1">'one\n'</span><span class="p">,</span>
+  <span class="s1">'two\n'</span><span class="p">,</span>
+  <span class="s1">'three\n'</span> <span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nx">restore</span><span class="p">(</span><span class="nx">diff</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="p">[</span> <span class="s1">'ore\n'</span><span class="p">,</span>
+  <span class="s1">'tree\n'</span><span class="p">,</span>
+  <span class="s1">'emu\n'</span> <span class="p">]</span>
+</pre>
+</div>
+
+
+<p><a name="unifiedDiff"></a></p>
+
+<h3>difflib.<strong>unifiedDiff</strong>(a, b, options)</h3>
+
+<p>Compare a and b (lists of strings); 
+return delta lines in unified diff format.</p>
+
+<p>options:</p>
+
+<ul>
+<li>fromfile</li>
+<li>tofile</li>
+<li>fromfiledate</li>
+<li>tofiledate</li>
+<li>n</li>
+<li>lineterm</li>
+</ul><p>Unified diffs are a compact way of showing just the lines that have 
+changed plus a few lines of context. 
+The changes are shown in a inline style (instead of separate before/after 
+blocks). 
+The number of context lines is set by n which defaults to three.</p>
+
+<p>By default, the diff control lines (those with <code>---</code>, <code>+++</code>, or <code>@@</code>) are 
+created with a trailing newline. </p>
+
+<p>For inputs that do not have trailing newlines, set the lineterm argument 
+to <code>""</code> so that the output will be uniformly newline free.</p>
+
+<p>The context diff format normally has a header for filenames and modification
+times. Any or all of these may be specified using strings for <em>fromfile</em>, 
+<em>tofile</em>, <em>fromfiledate</em>, and <em>tofiledate</em>. 
+The modification times are normally expressed in the ISO 8601 format.
+If not specified, the strings default to blanks.</p>
+
+<div class="highlight">
+<pre><span class="o">&gt;&gt;&gt;</span> <span class="nx">difflib</span><span class="p">.</span><span class="nx">unifiedDiff</span><span class="p">(</span><span class="s1">'one two three four'</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">),</span>
+<span class="p">...</span>                     <span class="s1">'zero one tree four'</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">),</span> <span class="p">{</span>
+<span class="p">...</span>                       <span class="nx">fromfile</span><span class="o">:</span> <span class="s1">'Original'</span>
+<span class="p">...</span>                       <span class="nx">tofile</span><span class="o">:</span> <span class="s1">'Current'</span><span class="p">,</span>
+<span class="p">...</span>                       <span class="nx">fromfiledate</span><span class="o">:</span> <span class="s1">'2005-01-26 23:30:50'</span><span class="p">,</span>
+<span class="p">...</span>                       <span class="nx">tofiledate</span><span class="o">:</span> <span class="s1">'2010-04-02 10:20:52'</span><span class="p">,</span>
+<span class="p">...</span>                       <span class="nx">lineterm</span><span class="o">:</span> <span class="s1">''</span>
+<span class="p">...</span>                     <span class="p">})</span>
+<span class="p">[</span> <span class="s1">'--- Original\t2005-01-26 23:30:50'</span><span class="p">,</span>
+  <span class="s1">'+++ Current\t2010-04-02 10:20:52'</span><span class="p">,</span>
+  <span class="s1">'@@ -1,4 +1,4 @@'</span><span class="p">,</span>
+  <span class="s1">'+zero'</span><span class="p">,</span>
+  <span class="s1">' one'</span><span class="p">,</span>
+  <span class="s1">'-two'</span><span class="p">,</span>
+  <span class="s1">'-three'</span><span class="p">,</span>
+  <span class="s1">'+tree'</span><span class="p">,</span>
+  <span class="s1">' four'</span> <span class="p">]</span>
+</pre>
+</div>
+
+
+<p><a name="IS_LINE_JUNK"></a></p>
+
+<h3>difflib.<strong>IS_LINE_JUNK</strong>(line)</h3>
+
+<p>Return true for ignorable lines. The line line is ignorable if <em>line</em> is 
+blank or contains a single <code>'#'</code>, otherwise it is not ignorable.</p>
+
+<p><a name="IS_CHARACTER_JUNK"></a></p>
+
+<h3>difflib.<strong>IS_CHARACTER_JUNK</strong>(ch)</h3>
+
+<p>Return true for ignorable characters. The character <em>ch</em> is ignorable if ch
+is a space or tab, otherwise it is not ignorable. 
+Used as a default for parameter charjunk in <a href="#ndiff">ndiff()</a>.</p>
+
+<h2>License</h2>
+
+<p>Ported by Xueqiao Xu &lt;xueqiaoxu@gmail.com&gt;</p>
+
+<p>PSF LICENSE AGREEMENT FOR PYTHON 2.7.2</p>
+
+<ol>
+<li>This LICENSE AGREEMENT is between the Python Software Foundation (“PSF”), and the Individual or Organization (“Licensee”) accessing and otherwise using Python 2.7.2 software in source or binary form and its associated documentation.</li>
+<li>Subject to the terms and conditions of this License Agreement, PSF hereby grants Licensee a nonexclusive, royalty-free, world-wide license to reproduce, analyze, test, perform and/or display publicly, prepare derivative works, distribute, and otherwise use Python 2.7.2 alone or in any derivative version, provided, however, that PSF’s License Agreement and PSF’s notice of copyright, i.e., “Copyright © 2001-2012 Python Software Foundation; All Rights Reserved” are retained in Python 2.7.2 alone or in any derivative version prepared by Licensee.</li>
+<li>In the event Licensee prepares a derivative work that is based on or incorporates Python 2.7.2 or any part thereof, and wants to make the derivative work available to others as provided herein, then Licensee hereby agrees to include in any such work a brief summary of the changes made to Python 2.7.2.</li>
+<li>PSF is making Python 2.7.2 available to Licensee on an “AS IS” basis. PSF MAKES NO REPRESENTATIONS OR WARRANTIES, EXPRESS OR IMPLIED. BY WAY OF EXAMPLE, BUT NOT LIMITATION, PSF MAKES NO AND DISCLAIMS ANY REPRESENTATION OR WARRANTY OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR PURPOSE OR THAT THE USE OF PYTHON 2.7.2 WILL NOT INFRINGE ANY THIRD PARTY RIGHTS.</li>
+<li>PSF SHALL NOT BE LIABLE TO LICENSEE OR ANY OTHER USERS OF PYTHON 2.7.2 FOR ANY INCIDENTAL, SPECIAL, OR CONSEQUENTIAL DAMAGES OR LOSS AS A RESULT OF MODIFYING, DISTRIBUTING, OR OTHERWISE USING PYTHON 2.7.2, OR ANY DERIVATIVE THEREOF, EVEN IF ADVISED OF THE POSSIBILITY THEREOF.</li>
+<li>This License Agreement will automatically terminate upon a material breach of its terms and conditions.</li>
+<li>Nothing in this License Agreement shall be deemed to create any relationship of agency, partnership, or joint venture between PSF and Licensee. This License Agreement does not grant permission to use PSF trademarks or trade name in a trademark sense to endorse or promote products or services of Licensee, or any third party.</li>
+<li>By copying, installing or otherwise using Python 2.7.2, Licensee agrees to be bound by the terms and conditions of this License Agreement.</li>
+</ol>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
+  </body>
+</html>
