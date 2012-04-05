@@ -42,6 +42,11 @@ _arrayCmp = (a, b) ->
 _has = (obj, key) ->
   Object::hasOwnProperty.call(obj, key)
 
+_any = (items) ->
+  for item in items
+    return true if item
+  false
+
 class SequenceMatcher
   ###
   SequenceMatcher is a flexible class for comparing pairs of sequences of
@@ -1238,7 +1243,7 @@ contextDiff = (a, b, {fromfile, tofile, fromfiledate, tofiledate, n, lineterm}={
       file1Range = _formatRangeContext(first[1], last[2])
       lines.push("*** #{file1Range} ****#{lineterm}")
 
-      if ((tag in ['replace', 'delete']) for [tag, _, _, _, _] in group).some((x) -> x)
+      if _any((tag in ['replace', 'delete']) for [tag, _, _, _, _] in group)
         for [tag, i1, i2, _, _] in group
           if tag isnt 'insert'
             for line in a[i1...i2]
@@ -1247,7 +1252,7 @@ contextDiff = (a, b, {fromfile, tofile, fromfiledate, tofiledate, n, lineterm}={
       file2Range = _formatRangeContext(first[3], last[4])
       lines.push("--- #{file2Range} ----#{lineterm}")
 
-      if ((tag in ['replace', 'insert']) for [tag, _, _, _, _] in group).some((x) -> x)
+      if _any((tag in ['replace', 'insert']) for [tag, _, _, _, _] in group)
         for [tag, _, _, j1, j2] in group
           if tag isnt 'delete'
             for line in b[j1...j2]
