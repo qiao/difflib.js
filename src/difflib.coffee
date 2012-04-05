@@ -39,6 +39,9 @@ _arrayCmp = (a, b) ->
     return 1 if a[i] > b[i]
   la - lb
 
+_has = (obj, key) ->
+  Object::hasOwnProperty.call(obj, key)
+
 class SequenceMatcher
   ###
   SequenceMatcher is a flexible class for comparing pairs of sequences of
@@ -305,7 +308,7 @@ class SequenceMatcher
     @b2j = b2j = {}
 
     for elt, i in b
-      indices = if b2j.hasOwnProperty(elt) then b2j[elt] else b2j[elt] = []
+      indices = if _has(b2j, elt) then b2j[elt] else b2j[elt] = []
       indices.push(i)
 
     # Purge junk elements
@@ -331,8 +334,8 @@ class SequenceMatcher
     # Sicne the number of *unique* junk elements is probably small, the
     # memory burden of keeping this set alive is likely trivial compared to
     # the size of b2j.
-    @isbjunk = (b) -> junk.hasOwnProperty(b)
-    @isbpopular = (b) -> popular.hasOwnProperty(b)
+    @isbjunk = (b) -> _has(junk, b)
+    @isbpopular = (b) -> _has(popular, b)
 
   findLongestMatch: (alo, ahi, blo, bhi) ->
     ### 
@@ -649,7 +652,7 @@ class SequenceMatcher
     avail = {}
     matches = 0
     for elt in @a
-      if avail.hasOwnProperty(elt)
+      if _has(avail, elt)
         numb = avail[elt]
       else
         numb = fullbcount[elt] or 0
