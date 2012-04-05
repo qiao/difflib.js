@@ -393,7 +393,7 @@ class SequenceMatcher
       # look at all instances of a[i] in b; note that because
       # b2j has no junk keys, the loop is skipped if a[i] is junk
       newj2len = {}
-      for j in (if a[i] of b2j then b2j[a[i]] else [])
+      for j in (if _has(b2j, a[i]) then b2j[a[i]] else [])
         # a[i] matches b[j]
         continue if j < blo
         break if j >= bhi
