@@ -25,7 +25,7 @@ Class Differ:
 
 # Requires
 {floor, max, min} = Math
-{Heap} = require('heap')
+Heap = require('heap')
 assert = require('assert')
 
 # Helper functions
@@ -720,7 +720,7 @@ getCloseMatches = (word, possibilities, n=3, cutoff=0.6) ->
       result.push([s.ratio(), x])
 
   # Move the best scorers to head of list
-  result = Heap.nlargest(n, result, _arrayCmp)
+  result = Heap.nlargest(result, n, _arrayCmp)
   # Strip scores for the best n matches
   (x for [score, x] in result)
 
