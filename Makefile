@@ -13,6 +13,8 @@ test:
 			--ui qunit \
 			--require should \
 			--timeout $(TEST_TIMEOUT) \
-			--reporter $(TEST_REPORTER) 
+			--reporter $(TEST_REPORTER) \
+			--compilers coffee:coffee-script \
+			test/*.coffee
 
 .PHONY: test
