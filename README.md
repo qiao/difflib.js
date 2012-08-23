@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/qiao/difflib.js.png)](http://travis-ci.org/qiao/difflib.js)
 Difflib.js
 ==========
 
