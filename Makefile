@@ -7,7 +7,7 @@ dist/difflib-browser.js: lib/difflib.js util/build.coffee
 lib/difflib.js: src/difflib.coffee
 	@coffee -c -o lib src
 
-test:
+test: lib/difflib*
 	@NODE_ENV=test \
 		node_modules/.bin/mocha \
 			--ui qunit \

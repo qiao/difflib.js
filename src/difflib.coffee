@@ -678,7 +678,7 @@ class SequenceMatcher
     # shorter sequence
     _calculateRatio(min(la, lb), la + lb)
 
-getCloseMatches = (word, possibilities, n=3, cutoff=0.6) ->
+getCloseMatches = (word, possibilities, n=3, cutoff=0.6, formatter) ->
   ###
   Use SequenceMatcher to return list of the best "good enough" matches.
 
@@ -693,6 +693,9 @@ getCloseMatches = (word, possibilities, n=3, cutoff=0.6) ->
 
   Optional arg cutoff (default 0.6) is a float in [0, 1].  Possibilities
   that don't score at least that similar to word are ignored.
+
+  Optional arg formatter is a function that is run on each element from possibilities 
+  before matching is run.
 
   The best (no more than n) matches among the possibilities are returned
   in a list, sorted by similarity score, most similar first.
@@ -713,11 +716,14 @@ getCloseMatches = (word, possibilities, n=3, cutoff=0.6) ->
   s = new SequenceMatcher()
   s.setSeq2(word)
   for x in possibilities
+    o = x
+    if formatter
+        x = formatter x
     s.setSeq1(x)
     if s.realQuickRatio() >= cutoff and
         s.quickRatio() >= cutoff and
         s.ratio() >= cutoff
-      result.push([s.ratio(), x])
+      result.push([s.ratio(), o])
 
   # Move the best scorers to head of list
   result = Heap.nlargest(result, n, _arrayCmp)
