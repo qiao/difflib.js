@@ -16,8 +16,8 @@ BANNER = '''
 build = (dest) ->
   browserified = browserify.bundle(__dirname + '/../lib/difflib.js')
   namespaced   = 'var difflib = (function() {' + browserified + 'return require("/difflib");})();'
-  uglified     = uglify(namespaced)
-  bannered     = BANNER + uglified
+  uglified     = uglify.minify({'difflib.js': namespaced}, {fromString: true})
+  bannered     = BANNER + uglified.code
   fs.writeFileSync(dest, bannered)
 
 build(__dirname + '/../dist/difflib-browser.js')
