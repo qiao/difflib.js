@@ -440,7 +440,7 @@ If not specified, the strings default to blanks.
 ```
 
 <a name="getCloseMatches" />
-### difflib.*getCloseMatches*(word, possibilities\[, n\]\[, cutoff\])
+### difflib.*getCloseMatches*(word, possibilities\[, n\]\[, cutoff\]\[, formatter\])
 
 Return a list of the best “good enough” matches. 
 *word* is a sequence for which close matches are desired 
@@ -454,12 +454,26 @@ Optional argument *cutoff* (default 0.6) is a float in the range
 [0, 1]. 
 Possibilities that don’t score at least that similar to word are ignored.
 
+Optional argument *formatter* is a function that is run on each element from
+*possibilities* before matching is run.
+
+
 The best (no more than n) matches among the possibilities are 
 returned in a list, sorted by similarity score, most similar first.
 
 ```js
 >>> difflib.getCloseMatches('appel', ['ape', 'apple', 'peach', 'puppy'])
 ['apple', 'ape']
+
+>>> difflib.getCloseMatches('appel', [
+        { id: 'a', fruit: 'apple' },
+        { id: 'b', fruit: 'pineapple' },
+        { id: 'c', fruit: 'cherry' },
+        { id: 'd', fruit: 'mango' }
+     ], null, null, function (i) {
+        return i.fruit;
+     })
+[{ id: 'a', fruit: 'apple' }]
 ```
 
 <a name="ndiff" />

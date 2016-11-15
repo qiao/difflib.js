@@ -32,6 +32,17 @@ test '.getCloseMatches', ->
  getCloseMatches('wheel', KEYWORDS).should.eql ['when', 'while']
  getCloseMatches('accost', KEYWORDS).should.eql ['const']
 
+ # format callback:
+ m = getCloseMatches 'appel', [
+  { id: 'a', fruit: 'apple' }
+  { id: 'b', fruit: 'pineapple' }
+  { id: 'c', fruit: 'cherry' }
+  { id: 'd', fruit: 'mango' }
+ ], null, 0.5, (i) ->
+  i.fruit
+ m[0].id.should.eql 'a'
+ m[1].id.should.eql 'b'
+
 test '._countLeading', ->
   _countLeading('   abc', ' ').should.eql 3
 
