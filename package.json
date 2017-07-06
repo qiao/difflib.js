@@ -5,6 +5,7 @@
   , "homepage"        : "https://github.com/qiao/difflib.js"
   , "keywords"        : ["diff"]
   , "author"          : "Xueqiao Xu <xueqiaoxu@gmail.com>"
+  , "license"          : "Python-2.0"
   , "main"            : "./index.js"
   , "dependencies"    : {
       "heap"            : ">= 0.2.0"
