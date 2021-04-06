@@ -21,7 +21,7 @@
     , "url"           : "git://github.com/qiao/difflib.js.git"
   }
   , "licenses"        : [{
-      "type"          :  "PSF"
+      "type"          :  "PSF-2.0"
     , "url"           : "http://docs.python.org/license.html"
   }]
 }
