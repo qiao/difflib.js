@@ -9,7 +9,6 @@
     "author": "Xueqiao Xu <xueqiaoxu@gmail.com>",
     "main": "./index.js",
     "dependencies": {
-        "browserify-fs": "^1.0.0",
         "heap": ">= 0.2.0"
     },
     "devDependencies": {
