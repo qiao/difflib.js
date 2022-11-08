@@ -586,6 +586,11 @@ is a space or tab, otherwise it is not ignorable.
 Used as a default for parameter charjunk in [ndiff()](#ndiff).
 
 
+Change Log
+----------
+ * 0.1.0 Use Map instead of Object to hold values being diffed -- fixes the bug where e.g. "true" and true, or "0" and 0 compare as identical (forked from Qiao's 2012-04-22 commit: e11553ba3e303e2db206d04c95f8e51c5692ca28)
+
+
 License
 -------
 
