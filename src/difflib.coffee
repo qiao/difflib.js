@@ -310,37 +310,38 @@ class SequenceMatcher
     # out the junk later is much cheaper than building b2j "right"
     # from the start.
     b = @b
-    @b2j = b2j = {}
+    @b2j = b2j = new Map()
 
     for elt, i in b
-      indices = if _has(b2j, elt) then b2j[elt] else b2j[elt] = []
+      if !b2j.has(elt) then b2j.set(elt, [])
+      indices = b2j.get(elt)
       indices.push(i)
 
     # Purge junk elements
-    junk = {}
+    junk = new Map()
     isjunk = @isjunk
     if isjunk
-      for elt in Object.keys(b2j)
+      b2j.forEach (idxs, elt) ->
         if isjunk(elt)
-          junk[elt] = true
-          delete b2j[elt]
+          junk.set(elt, true)
+          b2j.delete(elt)
 
     # Purge popular elements that are not junk
-    popular = {}
+    popular = new Map()
     n = b.length
     if @autojunk and n >= 200
       ntest = floor(n / 100) + 1
-      for elt, idxs of b2j
+      b2j.forEach (idxs, elt) ->
         if idxs.length > ntest
-          popular[elt] = true
-          delete b2j[elt]
+          popular.set(elt, true)
+          b2j.delete(elt)
 
     # Now for x in b, isjunk(x) == x in junk, but the latter is much faster.
     # Sicne the number of *unique* junk elements is probably small, the
     # memory burden of keeping this set alive is likely trivial compared to
     # the size of b2j.
-    @isbjunk = (b) -> _has(junk, b)
-    @isbpopular = (b) -> _has(popular, b)
+    @isbjunk = (b) -> junk.has(b)
+    @isbpopular = (b) -> popular.has(b)
 
   findLongestMatch: (alo, ahi, blo, bhi) ->
     ### 
@@ -393,7 +394,10 @@ class SequenceMatcher
       # look at all instances of a[i] in b; note that because
       # b2j has no junk keys, the loop is skipped if a[i] is junk
       newj2len = {}
-      for j in (if _has(b2j, a[i]) then b2j[a[i]] else [])
+      jlist = []
+      if b2j.has(a[i])
+        jlist = b2j.get(a[i])
+      for j in jlist
         # a[i] matches b[j]
         continue if j < blo
         break if j >= bhi

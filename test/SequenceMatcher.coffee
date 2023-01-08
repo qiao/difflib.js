@@ -19,6 +19,10 @@ test '#setSeq2', ->
   s.setSeq2('abcd')
   s.ratio().should.eql 1.0
 
+test '#stringsAndIntsAreDifferent', ->
+  opcodes = new SequenceMatcher(null, ['1','b','c','d'], [1, 'b','c','d']).getOpcodes()
+  opcodes.should.eql [ [ 'replace', 0, 1, 0, 1 ], [ 'equal', 1, 4, 1, 4 ] ]
+
 test '#findLongestMatch', ->
   isjunk = (x) -> x is ' '
   s = new SequenceMatcher(isjunk, ' abcd', 'abcd abcd')

@@ -14,10 +14,14 @@ BANNER = '''
 '''
 
 build = (dest) ->
-  browserified = browserify.bundle(__dirname + '/../lib/difflib.js')
-  namespaced   = 'var difflib = (function() {' + browserified + 'return require("/difflib");})();'
-  uglified     = uglify(namespaced)
-  bannered     = BANNER + uglified
-  fs.writeFileSync(dest, bannered)
-
+  bify = browserify()
+  bify.add(__dirname + '/../lib/difflib.js')
+  bify.bundle((err, payload) -> 
+    browserified = payload.toString('utf8')
+    namespaced   = 'var difflib = (function() {' + browserified + 'return require("/difflib");})();'
+    uglified     = uglify.minify(namespaced).code
+    bannered     = BANNER + uglified
+    fs.writeFileSync(dest, bannered)
+  )
+  
 build(__dirname + '/../dist/difflib-browser.js')

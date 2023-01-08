@@ -28,7 +28,8 @@ test '.getCloseMatches', ->
  getCloseMatches('appel', ['ape', 'apple', 'peach', 'puppy'])
    .should.eql ['apple', 'ape']
  
- KEYWORDS = require('coffee-script').RESERVED
+ # KEYWORDS = require('coffeescript').RESERVED # -- no longer available
+ KEYWORDS = ['case', 'default', 'function', 'var', 'void', 'with', 'const', 'let', 'enum', 'export', 'import', 'native', '__hasProp', '__extends', '__slice', '__bind', '__indexOf', 'implements', 'else', 'interface', 'package', 'private', 'protected', 'public', 'static', 'yield', 'true', 'false', 'null', 'this', 'new', 'delete', 'typeof', 'in', 'arguments', 'eval', 'instanceof', 'return', 'throw', 'break', 'continue', 'debugger', 'if', 'else', 'switch', 'for', 'while', 'do', 'try', 'catch', 'finally', 'class', 'extends', 'super', 'undefined', 'then', 'unless', 'until', 'loop', 'of', 'by', 'when', 'and', 'or', 'is', 'isnt', 'not', 'yes', 'no', 'on', 'off']
  getCloseMatches('wheel', KEYWORDS).should.eql ['when', 'while']
  getCloseMatches('accost', KEYWORDS).should.eql ['const']
 
